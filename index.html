@@ -50,10 +50,18 @@
 
             <div class="form-group ml-1">
               <button
+                v-if="!isEdit"
                 class="btn btn-lg btn-rounded btn-success"
                 v-on:click.prevent="saveContact(contact)"
               >
                 Criar Contato
+              </button>
+              <button
+                v-if="isEdit"
+                class="btn btn-lg btn-rounded btn-primary"
+                v-on:click.prevent="updateContact(contact)"
+              >
+                Atualizar Contato
               </button>
             </div>
           </form>
@@ -68,7 +76,12 @@
 
                   <p class="card-text">{{contact.email}}, {{contact.phone}}</p>
 
-                  <a href="#" class="btn btn-sm btn-primary">EDITAR</a>
+                  <a
+                    href="#"
+                    class="btn btn-sm btn-primary"
+                    @click.prevent="editContact(contact)"
+                    >EDITAR</a
+                  >
                   <a
                     href="#"
                     class="btn btn-sm btn-danger"
@@ -95,6 +108,7 @@
             email: '',
             phone: '',
           },
+          isEdit: false,
         },
         created() {
           console.log('Vue started...');
@@ -131,6 +145,29 @@
             this.contacts = contacts;
 
             localStorage.setItem('contactsApp', JSON.stringify(contacts));
+            location.reload();
+          },
+
+          editContact(contact) {
+            this.contact = contact;
+            this.isEdit = true;
+          },
+          updateContact(contact) {
+            console.log('updated');
+            let contacts = this.contacts.map((contactMap) => {
+              if (contactMap.id == contact.id) {
+                return contact;
+              }
+
+              return contactMap;
+            });
+
+            this.contacts = contacts;
+            this.isEdit = false;
+
+            localStorage.setItem('contactsApp', JSON.stringify(contacts));
+
+            location.reload();
           },
         },
       });
