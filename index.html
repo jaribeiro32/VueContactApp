@@ -92,6 +92,18 @@
         methods: {
           saveContact(contact) {
             console.log(contact);
+            let contacts = localStorage.getItem('contactsApp');
+            if (contacts) {
+              // atualiza contatos no local storage
+              contacts = JSON.parse(contacts);
+              contacts.push(contact);
+            } else {
+              //cria a chave
+              contacts = [contact];
+            }
+
+            // atualizar o local storage independentemente de novo contato ou adição
+            localStorage.setItem('contactsApp', JSON.stringify(contacts));
           },
         },
       });
