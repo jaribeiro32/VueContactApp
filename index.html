@@ -15,7 +15,7 @@
         <div
           class="col-12 border-bottom mb-5 d-flex justify-content-between align-items-center"
         >
-          <h2>{{name}}</h2>
+          <h2 :title="ex">{{name}}</h2>
           <p>{{ contactsCount }}</p>
         </div>
 
@@ -113,6 +113,7 @@
             phone: '',
           },
           isEdit: false,
+          ex: 'Meu App de Contatos!',
         },
         computed: {
           contactsCount() {
