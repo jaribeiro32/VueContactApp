@@ -13,7 +13,7 @@
     <div class="container" id="app">
       <div class="row mt-5">
         <div class="col-12 border-bottom mb-5">
-          <h2>Contatos</h2>
+          <h2>{{name}}</h2>
         </div>
 
         <div class="col-4">
@@ -24,6 +24,7 @@
                 type="text"
                 class="form-control"
                 placeholder="Nome Completo..."
+                v-bind:value="contact.name"
               />
             </div>
 
@@ -33,6 +34,7 @@
                 type="email"
                 class="form-control"
                 placeholder="Seu melhor email..."
+                v-bind:value="contact.email"
               />
             </div>
 
@@ -42,6 +44,7 @@
                 type="phone"
                 class="form-control"
                 placeholder="Telefone/Celular"
+                v-bind:value="contact.phone"
               />
             </div>
 
@@ -75,6 +78,14 @@
     <script>
       let app = new Vue({
         el: '#app',
+        data: {
+          name: 'Vue Contact App',
+          contact: {
+            name: 'Jhonny',
+            email: '',
+            phone: '',
+          },
+        },
       });
     </script>
   </body>
