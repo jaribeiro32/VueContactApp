@@ -69,7 +69,12 @@
                   <p class="card-text">{{contact.email}}, {{contact.phone}}</p>
 
                   <a href="#" class="btn btn-sm btn-primary">EDITAR</a>
-                  <a href="#" class="btn btn-sm btn-danger">DELETAR</a>
+                  <a
+                    href="#"
+                    class="btn btn-sm btn-danger"
+                    @click.prevent="removeContact(contact.id)"
+                    >DELETAR</a
+                  >
                 </div>
               </div>
             </div>
@@ -85,6 +90,7 @@
           contacts: [],
           name: 'Vue Contact App',
           contact: {
+            id: '',
             name: '',
             email: '',
             phone: '',
@@ -98,6 +104,7 @@
           saveContact(contact) {
             console.log(contact);
             let contacts = localStorage.getItem('contactsApp');
+            contact.id = new Date().getTime();
             if (contacts) {
               // atualiza contatos no local storage
               contacts = JSON.parse(contacts);
@@ -106,8 +113,23 @@
               //cria a chave
               contacts = [contact];
             }
+            // atualiza chave que por sua vez atualiza a tela
             this.contacts = contacts;
             // atualizar o local storage independentemente de novo contato ou adição
+            localStorage.setItem('contactsApp', JSON.stringify(contacts));
+          },
+          removeContact(contactId) {
+            let contacts = localStorage.getItem('contactsApp');
+
+            if (!contacts) return;
+            contacts = JSON.parse(contacts);
+            contacts = contacts.filter((contact) => {
+              return contact.id != contactId;
+            });
+
+            // atualiza array... que com a reatividade reflete na tela
+            this.contacts = contacts;
+
             localStorage.setItem('contactsApp', JSON.stringify(contacts));
           },
         },
