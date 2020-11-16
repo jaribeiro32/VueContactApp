@@ -12,8 +12,11 @@
   <body>
     <div class="container" id="app">
       <div class="row mt-5">
-        <div class="col-12 border-bottom mb-5">
+        <div
+          class="col-12 border-bottom mb-5 d-flex justify-content-between align-items-center"
+        >
           <h2>{{name}}</h2>
+          <p>{{ contactsCount }}</p>
         </div>
 
         <div class="col-4">
@@ -110,6 +113,11 @@
           },
           isEdit: false,
         },
+        computed: {
+          contactsCount() {
+            return `O total de contatos é ${this.contacts.length}`;
+          },
+        },
         created() {
           console.log('Vue started...');
           this.contacts = JSON.parse(localStorage.getItem('contactsApp'));
@@ -131,6 +139,7 @@
             this.contacts = contacts;
             // atualizar o local storage independentemente de novo contato ou adição
             localStorage.setItem('contactsApp', JSON.stringify(contacts));
+            location.reload();
           },
           removeContact(contactId) {
             let contacts = localStorage.getItem('contactsApp');
